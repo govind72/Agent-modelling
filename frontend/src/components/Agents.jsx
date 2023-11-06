@@ -8,10 +8,10 @@ import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
 const cardStyle = {
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
 };
 
 function Agents() {
@@ -29,19 +29,28 @@ function Agents() {
   }, []);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
-      <div style={{ width: '70%' }}>
+    <div
+      style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}
+    >
+      <div style={{ width: "70%" }}>
         <h2 style={{ textAlign: "center" }}>All Agents</h2>
         <Grid container spacing={4}>
           {agents.map((agent) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={agent.id}>
               <Card variant="outlined" style={cardStyle}>
                 <CardContent>
-                  <Typography variant="h6" component="div">
+                  <Typography
+                    variant="h4"
+                    component="div"
+                    style={{ fontWeight: "bold" }}
+                  >
                     {agent.name}
                   </Typography>
+                  <Typography variant="h5" component="div">
+                    {agent.description}
+                  </Typography>
                 </CardContent>
-                <CardContent style={{ textAlign: 'center' }}>
+                <CardContent style={{ textAlign: "center" }}>
                   <Link to={`/agent/${agent.id}`}>
                     <Button variant="contained">Subagents</Button>
                   </Link>

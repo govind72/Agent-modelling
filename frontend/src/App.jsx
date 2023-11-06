@@ -14,7 +14,7 @@ function App() {
         <Route path={"/agents"} element={<Agents />} />
         <Route path={"/"} element={<Home />} />
         <Route path={"/agent/:id"} element={<SubAgents />} />
-        <Route path={"/add-agent"} element={<AddAgent />} />
+        <Route path={"/add-agent/:id"} element={<AddAgent />} />
       </Routes>
     </Router>
   );

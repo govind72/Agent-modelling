@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import {useNavigate, useParams } from 'react-router-dom';
 
 const cardStyle = {
   display: 'flex',
@@ -22,11 +23,14 @@ const fieldStyle = {
 };
 
 function AddAgent() {
+  let {id} =useParams();
   const [agentDetails, setAgentDetails] = useState({
     name: '',
-    property1: '',
+    description: '',
     property2: '',
-    property3: ''
+    property3: '',
+    parentId: id,
+    subAgents:[],
   });
 
   const handleInputChange = (e) => {
@@ -38,10 +42,12 @@ function AddAgent() {
     axios.post('http://localhost:3000/agents', agentDetails)
       .then(res => {
         console.log('Agent added:', res.data);
+        window.location = `/agent/${id}`;
       })
       .catch(error => {
         console.error(error);
       });
+
   };
 
   return (
@@ -60,9 +66,9 @@ function AddAgent() {
           </div>
           <div style={fieldStyle}>
             <TextField
-              label="Property 1"
-              name="property1"
-              value={agentDetails.property1}
+              label="Description"
+              name="description"
+              value={agentDetails.description}
               onChange={handleInputChange}
               fullWidth
             />
