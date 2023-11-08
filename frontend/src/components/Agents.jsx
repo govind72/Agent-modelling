@@ -51,7 +51,10 @@ function Agents() {
                   </Typography>
                 </CardContent>
                 <CardContent style={{ textAlign: "center" }}>
-                  <Link to={`/agent/${agent.id}`}>
+                  <Link to={`/agent/${agent.id}`} >
+                    <Button variant="contained">View</Button>
+                  </Link>
+                  <Link to={`/agent/${agent.id}/subagents`}>
                     <Button variant="contained">Subagents</Button>
                   </Link>
                 </CardContent>

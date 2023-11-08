@@ -42,7 +42,7 @@ function AddAgent() {
     axios.post('http://localhost:3000/agents', agentDetails)
       .then(res => {
         console.log('Agent added:', res.data);
-        window.location = `/agent/${id}`;
+        window.location = `/agent/${id}/subagents`;
       })
       .catch(error => {
         console.error(error);
