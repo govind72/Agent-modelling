@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import axios from "axios";
-import Grid from "@mui/material/Grid";
+// import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -19,6 +19,7 @@ const cardStyle = {
 function Home() {
   const [topLevelAgents, setTopLevelAgents] = useState([]);
   const [show, setShow] = useState(false);
+  const ref = useRef(null);
 
   useEffect(() => {
     axios
@@ -30,7 +31,18 @@ function Home() {
         console.error(error);
       });
   }, []);
+  const scrollToBottom=()=>{
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  }
 
+  const handleClick = () => {
+    scrollToBottom();
+    setShow(true);
+    
+  };
+  
+  
+   
   return (
     <div style={{ marginTop: "50px" }}>
       <div style={{ textAlign: "center" }}>
@@ -42,18 +54,18 @@ function Home() {
         />
         <br />
         <button
-          onClick={() => setShow(true)}
+          onClick={handleClick}
           style={{ marginTop: "20px", padding: "10px 20px" }}
         >
           Show Top Level Agents
         </button>
       </div>
       {show && (
-        <div style={{ width: "70%", margin: "0 auto" }}>
+        <div ref={ref} style={{ width: "70%", margin: "0 auto" }}>
           <h2 style={{ textAlign: "center" }}>Top Level Agents</h2>
 
           {topLevelAgents.map((agent) => (
-            <Card variant="outlined" style={cardStyle}>
+            <Card key={agent.id} variant="outlined" style={cardStyle}>
               <CardContent>
                 <Typography
                   variant="h4"
@@ -68,7 +80,14 @@ function Home() {
               </CardContent>
               <CardContent style={{ textAlign: "center" }}>
                 <Link to={`/agent/${agent.id}`}>
-                  <Button variant="contained">Subagents</Button>
+                  <Button variant="contained" style={{ margin: "5px" }}>
+                    View
+                  </Button>
+                </Link>
+                <Link to={`/agent/${agent.id}/subagents`}>
+                  <Button variant="contained" style={{ margin: "5px" }}>
+                    Subagents
+                  </Button>
                 </Link>
               </CardContent>
             </Card>

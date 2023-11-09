@@ -5,6 +5,7 @@ import Agents from "./components/Agents";
 import SubAgents from "./components/SubAgents";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
+import ViewAgent from "./components/ViewAgent";
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
       <Routes>
         <Route path={"/agents"} element={<Agents />} />
         <Route path={"/"} element={<Home />} />
-        <Route path={"/agent/:id"} element={<SubAgents />} />
+        <Route path={"/agent/:id"} element={<ViewAgent />} />
+        <Route path={"/agent/:id/subagents"} element={<SubAgents />} />
         <Route path={"/add-agent/:id"} element={<AddAgent />} />
       </Routes>
     </Router>

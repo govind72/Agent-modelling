@@ -65,6 +65,15 @@ function SubAgents() {
                   variant="contained"
                   component={Link}
                   to={`/agent/${subAgent.id}`}
+                  style={{ margin: "5px" }}
+                >
+                  View
+                </Button>
+                <Button
+                  variant="contained"
+                  component={Link}
+                  to={`/agent/${subAgent.id}/subagents`}
+                  style={{ margin: "5px" }}
                 >
                   View Subagents
                 </Button>
@@ -84,7 +93,7 @@ function SubAgents() {
                 variant="contained"
                 component={Link}
                 to={{
-                  pathname: `/add-agent/${id}`
+                  pathname: `/add-agent/${id}`,
                 }}
               >
                 Add New Agent
