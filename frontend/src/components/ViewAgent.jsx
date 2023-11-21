@@ -1,8 +1,8 @@
 // AgentDetails.js
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-
+import Typography from "@mui/material/Typography";
 // import Grid from "@mui/material/Grid";
 
 import CardContent from "@mui/material/CardContent";
@@ -14,7 +14,16 @@ function AgentDetails() {
   const { id } = useParams();
   const [agent, setAgent] = useState(null);
   const [subAgents, setSubAgents] = useState([]);
+  const [hoveredSubagentsButton, setHoveredSubagentsButton] = useState(null);
 
+  
+  const handleMouseEnterSubagents = (agentId) => {
+    setHoveredSubagentsButton(agentId);
+  };
+
+  const handleMouseLeaveSubagents = () => {
+    setHoveredSubagentsButton(null);
+  };
   useEffect(() => {
     axios
       .get(`http://localhost:3000/agents/${id}`)
@@ -44,13 +53,89 @@ function AgentDetails() {
 
   return (
     <div>
-      <h1>{agent.name}</h1>
-      <p>Description: {agent.description}</p>
-      {agent.property2 && <p>Property2: {agent.property2}</p>}
-      {agent.property3 && <p>Property3: {agent.property3}</p>}
+      <Typography
+        variant="h4"
+        component="div"
+        style={{
+          fontWeight: "bold",
+
+          margin: "10px",
+        }}
+      >
+        {agent.name}
+      </Typography>
+      <Typography
+        variant="h4"
+        component="div"
+        style={{
+          fontSize: "1.2rem",
+
+          margin: "10px",
+        }}
+      >
+        <b>Description:</b> <br></br>
+        {agent.description}
+        <br></br>
+      </Typography>
+      {agent.property2 && (
+        <Typography
+          variant="h4"
+          component="div"
+          style={{
+            fontSize: "1.2rem",
+            fontWeight: "bold",
+            margin: "10px",
+          }}
+        >
+          Properties:
+        </Typography>
+      )}
+      <ul>
+        {agent.property2 && (
+          <li>
+            <Typography
+              variant="h4"
+              component="div"
+              style={{
+                fontSize: "1.2rem",
+
+                margin: "10px",
+              }}
+            >
+              {agent.property2}
+            </Typography>
+          </li>
+        )}
+
+        {agent.property3 && (
+          <li>
+            <Typography
+              variant="h4"
+              component="div"
+              style={{
+                fontSize: "1.2rem",
+
+                margin: "10px",
+              }}
+            >
+              {agent.property3}
+            </Typography>
+          </li>
+        )}
+      </ul>
       {subAgents.length > 0 && (
         <div>
-          <h2>Subagents:</h2>
+          <Typography
+            variant="h4"
+            component="div"
+            style={{
+              fontSize: "1.2rem",
+              fontWeight: "bold",
+              margin: "10px",
+            }}
+          >
+            Subagents:
+          </Typography>
           <ul>
             {subAgents.map((subAgent) => (
               <li key={subAgent.id}>{subAgent.name}</li>
@@ -60,7 +145,16 @@ function AgentDetails() {
       )}
       <CardContent>
         <Link to={`/agent/${agent.id}/subagents`}>
-          <Button variant="contained" style={{ margin: "0px" }}>
+          <Button
+            variant="contained"
+            style={{
+              margin: "0px",
+              backgroundColor:
+                hoveredSubagentsButton === agent.id ? "#2f31317d" : "black",
+            }}
+            onMouseEnter={() => handleMouseEnterSubagents(agent.id)}
+            onMouseLeave={handleMouseLeaveSubagents}
+          >
             Subagents
           </Button>
         </Link>
