@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
@@ -18,7 +18,32 @@ const cardStyle = {
 function SubAgents() {
   let { id } = useParams();
   const [subAgents, setSubAgents] = useState([]);
+  const [hoveredViewButton, setHoveredViewButton] = useState(null);
+  const [hoveredSubagentsButton, setHoveredSubagentsButton] = useState(null);
+  const [hoveredAddagentButton,setHoveredAddagentButton]=useState(null);
 
+  const handleMouseEnterView = (agentId) => {
+    setHoveredViewButton(agentId);
+  };
+
+  const handleMouseLeaveView = () => {
+    setHoveredViewButton(null);
+  };
+
+  const handleMouseEnterSubagents = (agentId) => {
+    setHoveredSubagentsButton(agentId);
+  };
+
+  const handleMouseLeaveSubagents = () => {
+    setHoveredSubagentsButton(null);
+  };
+  const handleMouseEnterAdd = (x) => {
+    setHoveredAddagentButton(x);
+  };
+
+  const handleMouseLeaveAdd = () => {
+    setHoveredAddagentButton(false);
+  };
   useEffect(() => {
     axios
       .get(`http://localhost:3000/agents/${id}`)
@@ -52,11 +77,23 @@ function SubAgents() {
                 <Typography
                   variant="h4"
                   component="div"
-                  style={{ fontWeight: "bolder" }}
+                  style={{
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    margin: "10px",
+                  }}
                 >
                   {subAgent.name}
                 </Typography>
-                <Typography variant="h5" component="div">
+                <Typography
+                  variant="h5"
+                  component="div"
+                  style={{
+                    textAlign: "center",
+                    margin: "10px",
+                    fontSize: "1.2rem",
+                  }}
+                >
                   {subAgent.description}
                 </Typography>
               </CardContent>
@@ -65,7 +102,13 @@ function SubAgents() {
                   variant="contained"
                   component={Link}
                   to={`/agent/${subAgent.id}`}
-                  style={{ margin: "5px" }}
+                  style={{
+                    margin: "5px",
+                    backgroundColor:
+                      hoveredViewButton === subAgent.id ? "#2f31317d" : "black",
+                  }}
+                  onMouseEnter={() => handleMouseEnterView(subAgent.id)}
+                  onMouseLeave={handleMouseLeaveView}
                 >
                   View
                 </Button>
@@ -73,7 +116,15 @@ function SubAgents() {
                   variant="contained"
                   component={Link}
                   to={`/agent/${subAgent.id}/subagents`}
-                  style={{ margin: "5px" }}
+                  style={{
+                    margin: "5px",
+                    backgroundColor:
+                      hoveredSubagentsButton === subAgent.id
+                        ? "#2f31317d"
+                        : "black",
+                  }}
+                  onMouseEnter={() => handleMouseEnterSubagents(subAgent.id)}
+                  onMouseLeave={handleMouseLeaveSubagents}
                 >
                   View Subagents
                 </Button>
@@ -95,6 +146,14 @@ function SubAgents() {
                 to={{
                   pathname: `/add-agent/${id}`,
                 }}
+                style={{
+                  margin: "5px",
+                  backgroundColor: hoveredAddagentButton
+                    ? "#2f31317d"
+                    : "black",
+                }}
+                onMouseEnter={() => handleMouseEnterAdd(true)}
+                onMouseLeave={handleMouseLeaveAdd}
               >
                 Add New Agent
               </Button>
